@@ -9,12 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_online')->default(false);
-            $table->timestamp('last_seen_at')->nullable();
-            $table->string('clinic_category');
+            $table->string('clinic_category')->nullable();
         });
     }
 
@@ -24,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('clinic_category');
         });
     }
 };
