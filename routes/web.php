@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Doctor\DoctorDashboardController;
+use App\Http\Controllers\BotChatController;
 
 Route::get('/', [MainController::class, 'index']);
 
@@ -17,6 +18,10 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::post('/user/topup/store', [UserDashboardController::class, 'storeTopup'])->name('user.topup.store');
     Route::get('/chat/initiate/{category}', [UserDashboardController::class, 'createRoom'])->name('chat.initiate');
+    Route::get('/chat/options', [BotChatController::class, 'showOptions'])->name('chat.options');
+    Route::get('/chat/bot', [BotChatController::class, 'showBotChat'])->name('chat.bot');
+    Route::post('/chat/bot/send', [BotChatController::class, 'sendMessage'])->name('chat.bot.send');
+    Route::post('/chat/bot/reset', [BotChatController::class, 'resetChat'])->name('chat.bot.reset');
 });
 
 // ==========================================
@@ -95,5 +100,8 @@ Route::post('/doctor/offline', function (Request $request) {
     return response()->json(['ok' => true]);
 })->middleware('auth')->name('doctor.offline');
 
+Route::get('/chat/options', [BotChatController::class, 'showOptions'])->name('chat.options');
+Route::get('/chat/bot-guest', [BotChatController::class, 'showGuestBotChat'])->name('chat.bot.guest');
+Route::post('/chat/bot-guest/send', [BotChatController::class, 'sendGuestMessage'])->name('chat.bot.guest.send');
 
 require __DIR__.'/auth.php';

@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chat_tariffs', function (Blueprint $table) {
+        Schema::create('bot_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('category');
-            $table->integer('price');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->enum('role', ['user', 'assistant']); // siapa pengirim
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chat_tariffs');
+        Schema::dropIfExists('bot_messages');
     }
 };

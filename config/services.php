@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'deepseek' => [
+        'api_key' => env('DEEPSEEK_API_KEY'),
+        'api_url' => env('DEEPSEEK_API_URL', 'https://api.deepseek.com/chat/completions'),
+        'model'   => env('DEEPSEEK_MODEL', 'deepseek-v4-flash'),
+    ],
+
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+        'api_url' => env('OPENAI_API_URL', 'https://api.openai.com/v1/chat/completions'),
+        'model'   => env('OPENAI_MODEL', 'gpt-4o-mini'),
+    ],
+    'ai_provider' => env('AI_PROVIDER', 'deepseek'),
 ];

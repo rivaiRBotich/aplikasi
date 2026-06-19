@@ -53,9 +53,9 @@
                     Klinik MBC mendefinisikan ulang layanan kesehatan melalui konsultasi cerdas dengan interaksi live chat interaktif bersama dokter spesialis umum, kecantikan, dan gigi.
                 </p>
                 <div class="pt-2 flex flex-col sm:flex-row gap-4">
-                    <button onclick="openChatBot()" class="bg-teal-600 text-white px-8 py-3.5 rounded-full font-medium hover:bg-teal-700 shadow-md transition text-center">
+                    <a href="{{ route('chat.options') }}" class="bg-teal-600 text-white px-8 py-3.5 rounded-full font-medium hover:bg-teal-700 shadow-md transition text-center">
                         <i class="fa-solid fa-robot mr-2"></i> Konsultasi Sekarang
-                    </button>
+                    </a>
                     <a href="#solutions" class="border border-slate-200 text-slate-700 px-8 py-3.5 rounded-full font-medium hover:bg-slate-50 transition text-center">
                         Lihat Produk Layanan
                     </a>
@@ -140,6 +140,49 @@
     </section>
 
     <!-- 5. FLOATING LIVE CHAT WIDGET -->
+    <!-- <div class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleChatModal()" class="bg-teal-600 hover:bg-teal-700 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-105 transition duration-200 relative group">
+            <i class="fa-solid fa-comments text-xl"></i>
+            <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+        </button>
+    </div> -->
+
+    <!-- MODAL POPUP CHAT INTERAKTIF -->
+    <!-- <div id="chatModal" class="fixed bottom-24 right-6 w-96 h-[520px] bg-white rounded-2xl shadow-2xl border border-slate-100 z-50 hidden flex flex-col overflow-hidden"> -->
+        <!-- Header Chat -->
+        <!-- <div class="bg-slate-900 p-4 text-white flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center font-bold text-sm">MBC</div>
+                <div>
+                    <h4 class="font-semibold text-sm">Asisten Virtual MBC</h4>
+                    <span class="text-xs text-emerald-400 flex items-center"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1.5"></span>Respons Cepat AI</span>
+                </div>
+            </div>
+            <button onclick="toggleChatModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
+        </div> -->
+
+        <!-- Box Isi Chat -->
+        <!-- <div class="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50 text-sm" id="chatMessages">
+            <div class="flex items-start space-x-2">
+                <div class="bg-white border border-slate-100 text-slate-700 p-3 rounded-2xl rounded-tl-none max-w-[85%] shadow-sm">
+                    Halo! 👋 Perkenalkan saya bot klinik MBC. Ada yang bisa saya bantu terkait keluhan medis Anda hari ini? Silakan ketik keluhan Anda di bawah.
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Input Chat -->
+        <!-- <div class="p-3 bg-white border-t border-slate-100 flex items-center space-x-2">
+            <input type="text" id="userInput" placeholder="Ketik keluhan atau ketik 'Chat Dokter'..." class="flex-1 bg-slate-50 border border-slate-200 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-teal-500 focus:bg-white transition" onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" class="bg-teal-600 text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-teal-700 transition">
+                <i class="fa-solid fa-paper-plane text-xs"></i>
+            </button>
+        </div> -->
+    <!-- </div> -->
+
+    <!-- 5. FLOATING LIVE CHAT WIDGET -->
     <div class="fixed bottom-6 right-6 z-50">
         <button onclick="toggleChatModal()" class="bg-teal-600 hover:bg-teal-700 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-105 transition duration-200 relative group">
             <i class="fa-solid fa-comments text-xl"></i>
@@ -149,7 +192,7 @@
             </span>
         </button>
     </div>
-
+    
     <!-- MODAL POPUP CHAT INTERAKTIF -->
     <div id="chatModal" class="fixed bottom-24 right-6 w-96 h-[520px] bg-white rounded-2xl shadow-2xl border border-slate-100 z-50 hidden flex flex-col overflow-hidden">
         <!-- Header Chat -->
@@ -158,25 +201,35 @@
                 <div class="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center font-bold text-sm">MBC</div>
                 <div>
                     <h4 class="font-semibold text-sm">Asisten Virtual MBC</h4>
-                    <span class="text-xs text-emerald-400 flex items-center"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1.5"></span>Respons Cepat AI</span>
+                    <span class="text-xs text-emerald-400 flex items-center"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1.5"></span>Respons BOT</span>
                 </div>
             </div>
             <button onclick="toggleChatModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
         </div>
-
+    
         <!-- Box Isi Chat -->
         <div class="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50 text-sm" id="chatMessages">
             <div class="flex items-start space-x-2">
                 <div class="bg-white border border-slate-100 text-slate-700 p-3 rounded-2xl rounded-tl-none max-w-[85%] shadow-sm">
-                    Halo! 👋 Perkenalkan saya bot klinik MBC. Ada yang bisa saya bantu terkait keluhan medis Anda hari ini? Silakan ketik keluhan Anda di bawah.
+                    Halo!, Perkenalkan saya bot klinik MBC. Ada yang bisa saya bantu terkait keluhan medis Anda hari ini? Silakan ketik keluhan Anda di bawah, atau ketik <b>"chat dokter"</b> untuk konsultasi langsung.
+                </div>
+            </div>
+            <!-- Indikator mengetik -->
+            <div id="typingIndicatorWidget" class="hidden flex items-start space-x-2">
+                <div class="bg-white border border-slate-100 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm">
+                    <div class="flex space-x-1">
+                        <span class="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style="animation-delay:0ms"></span>
+                        <span class="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style="animation-delay:150ms"></span>
+                        <span class="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style="animation-delay:300ms"></span>
+                    </div>
                 </div>
             </div>
         </div>
-
+    
         <!-- Input Chat -->
         <div class="p-3 bg-white border-t border-slate-100 flex items-center space-x-2">
             <input type="text" id="userInput" placeholder="Ketik keluhan atau ketik 'Chat Dokter'..." class="flex-1 bg-slate-50 border border-slate-200 rounded-full px-4 py-2.5 text-xs focus:outline-none focus:border-teal-500 focus:bg-white transition" onkeypress="handleKeyPress(event)">
-            <button onclick="sendMessage()" class="bg-teal-600 text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-teal-700 transition">
+            <button onclick="sendMessage()" id="widgetSendBtn" class="bg-teal-600 text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-teal-700 transition">
                 <i class="fa-solid fa-paper-plane text-xs"></i>
             </button>
         </div>
@@ -188,11 +241,11 @@
     </footer>
 
     <!-- LOGIKA JAVASCRIPT CHATBOX (FRONTEND TEMPORARY) -->
-    <script>
+    <!-- <script>
         function toggleChatModal() {
             const modal = document.getElementById('chatModal');
             modal.classList.toggle('hidden');
-        </div>
+        }
 
         function openChatBot() {
             const modal = document.getElementById('chatModal');
@@ -250,6 +303,131 @@
                 }
                 container.scrollTop = container.scrollHeight;
             }, 800);
+        }
+    </script> -->
+    <script>
+        
+        let widgetHistory = [];
+    
+        function toggleChatModal() {
+            const modal = document.getElementById('chatModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                document.getElementById('userInput').focus();
+            }
+        }
+    
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+    
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const container = document.getElementById('chatMessages');
+            const typingIndicator = document.getElementById('typingIndicatorWidget');
+            const sendBtn = document.getElementById('widgetSendBtn');
+    
+            const text = input.value.trim();
+            if (text === '') return;
+    
+            // Tampilkan chat user
+            const userHtml = `
+                <div class="flex justify-end">
+                    <div class="bg-teal-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] shadow-sm">
+                        ${escapeHtml(text)}
+                    </div>
+                </div>
+            `;
+            typingIndicator.insertAdjacentHTML('beforebegin', userHtml);
+    
+            input.value = '';
+            input.disabled = true;
+            sendBtn.disabled = true;
+            container.scrollTop = container.scrollHeight;
+    
+            const lowerText = text.toLowerCase();
+    
+            // Arahkan ke chat dokter kalau diminta
+            if (lowerText.includes('dokter') || lowerText.includes('chat langsung')) {
+                const doctorHtml = `
+                    <div class="flex items-start space-x-2">
+                        <div class="bg-white border border-slate-200 text-slate-800 p-4 rounded-2xl rounded-tl-none max-w-[85%] shadow-sm space-y-3">
+                            <p class="font-semibold text-xs text-slate-500 uppercase tracking-wider">Silakan masuk untuk pilih spesialisasi:</p>
+                            <a href="{{ route('login') }}" class="block text-center bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-xl text-xs font-semibold transition">
+                                Masuk untuk Konsultasi Dokter <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                typingIndicator.insertAdjacentHTML('beforebegin', doctorHtml);
+                container.scrollTop = container.scrollHeight;
+                input.disabled = false;
+                sendBtn.disabled = false;
+                input.focus();
+                return;
+            }
+    
+            // Tampilkan indikator mengetik & panggil API beneran
+            typingIndicator.classList.remove('hidden');
+            container.scrollTop = container.scrollHeight;
+    
+            fetch(`{{ route('chat.bot.guest.send') }}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '',
+                },
+                body: JSON.stringify({
+                    message: text,
+                    history: widgetHistory,
+                }),
+            })
+            .then(res => res.json())
+            .then(data => {
+                typingIndicator.classList.add('hidden');
+                const reply = data.message ?? 'Maaf, sistem bot sedang gangguan. Silakan coba lagi atau hubungi dokter kami langsung.';
+    
+                const botHtml = `
+                    <div class="flex items-start space-x-2">
+                        <div class="bg-white border border-slate-100 text-slate-700 p-3 rounded-2xl rounded-tl-none max-w-[85%] shadow-sm whitespace-pre-line">
+                            ${escapeHtml(reply)}
+                        </div>
+                    </div>
+                `;
+                typingIndicator.insertAdjacentHTML('beforebegin', botHtml);
+    
+                widgetHistory.push({ role: 'user', content: text });
+                widgetHistory.push({ role: 'assistant', content: reply });
+                if (widgetHistory.length > 20) {
+                    widgetHistory = widgetHistory.slice(-20);
+                }
+    
+                container.scrollTop = container.scrollHeight;
+            })
+            .catch(err => {
+                typingIndicator.classList.add('hidden');
+                const errHtml = `
+                    <div class="flex items-start space-x-2">
+                        <div class="bg-white border border-slate-100 text-slate-700 p-3 rounded-2xl rounded-tl-none max-w-[85%] shadow-sm">
+                            Maaf, sistem bot sedang gangguan. Silakan coba lagi atau hubungi dokter kami langsung.
+                        </div>
+                    </div>
+                `;
+                typingIndicator.insertAdjacentHTML('beforebegin', errHtml);
+                container.scrollTop = container.scrollHeight;
+                console.error(err);
+            })
+            .finally(() => {
+                input.disabled = false;
+                sendBtn.disabled = false;
+                input.focus();
+            });
         }
     </script>
 </body>
