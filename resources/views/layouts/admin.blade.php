@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - MBC Clinic</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/logo_mbc.jpeg') }}">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -12,9 +13,17 @@
     <!-- MENU SAMPING / SIDEBAR -->
     <aside class="w-64 bg-slate-900 text-white flex flex-col h-full justify-between">
         <div>
-            <div class="p-6 border-b border-slate-800 flex items-center space-x-2">
-                <span class="text-xl font-bold tracking-wider text-teal-400">MBC</span>
-                <span class="text-[10px] bg-slate-800 text-teal-400 px-2 py-0.5 rounded border border-slate-700 font-bold">ADMIN</span>
+            <div class="p-4 border-b border-slate-800 flex items-center space-x-3">
+                <img src="{{ asset('images/logo_mbc.jpeg') }}" 
+                    alt="MBC Clinic Logo" 
+                    class="h-14 w-14 rounded-full object-cover border-2 border-teal-500/30 shrink-0">
+                
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold text-white tracking-wide">MBC Clinic</span>
+                    <span class="text-[9px] text-teal-400 font-bold tracking-widest uppercase mt-0.5">
+                        Panel Admin
+                    </span>
+                </div>
             </div>
             <nav class="p-4 space-y-1">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm transition font-medium {{ Request::routeIs('admin.dashboard') ? 'bg-teal-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
@@ -49,7 +58,7 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="w-full text-left flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm text-rose-400 hover:bg-rose-500/10 transition font-medium">
-                    <i class="fa-solid fa-sign-out-alt w-5"></i> <span>Keluar Panel</span>
+                    <i class="fa-solid fa-sign-out-alt w-5"></i> <span>Log Out</span>
                 </button>
             </form>
         </div>
@@ -59,7 +68,7 @@
     <main class="flex-1 flex flex-col overflow-y-auto">
         <!-- Topbar Sederhana -->
         <header class="bg-white border-b border-slate-100 h-16 flex items-center justify-between px-8 shrink-0">
-            <h2 class="font-semibold text-slate-800">Panel Kendali</h2>
+            <h2 class="font-semibold text-slate-800">Dashboard</h2>
             <div class="text-sm font-medium text-slate-600 flex items-center space-x-2">
                 <i class="fa-regular fa-user-circle text-lg"></i>
                 <span>{{ Auth::user()->name }}</span>

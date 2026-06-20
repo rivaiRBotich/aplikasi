@@ -29,7 +29,7 @@
             <tbody>
                 @foreach($portfolios as $p)
                 <tr class="border-b border-slate-50 text-slate-600">
-                    <td class="py-3"><img src="{{ asset('storage/' . $p->image) }}" class="w-12 h-10 object-cover rounded-lg"></td>
+                    <td class="py-3"><img src="{{ asset('storage/app/public/products' . $p->image) }}" class="w-12 h-10 object-cover rounded-lg"></td>
                     <td class="py-3 font-medium text-slate-800">{{ $p->title }}</td>
                     <td class="py-3 text-xs"><span class="bg-slate-100 px-2 py-1 rounded-full">{{ $p->category }}</span></td>
                     <td class="py-3 text-center">

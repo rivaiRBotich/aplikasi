@@ -192,7 +192,7 @@ class DoctorDashboardController extends Controller
     //         return redirect()->back()->with('error', 'Gagal menyelesaikan sesi: ' . $e->getMessage());
     //     }
     // }
-    use App\Models\DoctorCommission;
+    // use App\Models\DoctorCommission;
 
     public function endChat($id)
     {

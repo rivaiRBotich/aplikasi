@@ -1,5 +1,9 @@
 <x-guest-layout>
     <!-- Session Status -->
+    <div class="flex flex-col items-center justify-center mb-6">
+        <img src="{{ asset('images/logo_mbc.jpeg') }}" alt="MBC Clinic Logo" class="h-20 w-auto object-contain max-w-[240px] md:max-w-[320px]">
+        <h2 class="mt-2 text-lg font-semibold text-gray-700 tracking-wide">Masuk ke Akun Anda</h2>
+    </div>
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
@@ -32,16 +36,25 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        <div class="flex flex-col space-y-4 mt-6">
+            
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <div class="flex flex-col sm:flex-row items-center gap-3 justify-end">
+                <a href="{{ route('register') }}" class="w-full sm:w-auto text-center border border-teal-600 text-teal-600 text-xs px-5 py-3 rounded-md font-semibold tracking-widest uppercase hover:bg-teal-50 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                    Buat Akun
+                </a>
+
+                <x-primary-button class="w-full sm:w-auto justify-center bg-slate-900 hover:bg-slate-800 py-3">
+                    {{ __('Log in') }}
+                </x-primary-button>
+            </div>
+            <div class="text-center">
+                @if (Route::has('password.request'))
+                    <a class="underline text-xs text-gray-500 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                        {{ __('Forgot your password?') }}
+                    </a>
+                @endif
+            </div>
         </div>
     </form>
 </x-guest-layout>

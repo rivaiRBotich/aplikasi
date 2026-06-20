@@ -30,7 +30,7 @@
             <tbody>
                 @foreach($products as $product)
                 <tr class="border-b border-slate-50 text-slate-600">
-                    <td class="py-3"><img src="{{ asset('storage/' . $product->image) }}" class="w-10 h-10 object-cover rounded-lg"></td>
+                    <td class="py-3"><img src="{{ asset('storage/app/public/products' . $product->image) }}" class="w-10 h-10 object-cover rounded-lg"></td>
                     <td class="py-3 font-medium text-slate-800">{{ $product->name }}</td>
                     <td class="py-3">{{ $product->solution }}</td>
                     <td class="py-3 font-semibold text-teal-600">Rp{{ number_format($product->price,0,',','.') }}</td>
