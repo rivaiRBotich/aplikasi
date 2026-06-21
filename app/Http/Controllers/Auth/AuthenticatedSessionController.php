@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+use App\Events\UserOnlineStatusChanged;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -109,6 +110,7 @@ class AuthenticatedSessionController extends Controller
                 'is_online'    => 1,
                 'last_seen_at' => now(),
             ]);
+            broadcast(new UserOnlineStatusChanged($user->fresh(), true));
         }
 
         if ($user->role === 'admin') {
@@ -130,6 +132,7 @@ class AuthenticatedSessionController extends Controller
                 'is_online'    => 0,
                 'last_seen_at' => now(),
             ]);
+            broadcast(new UserOnlineStatusChanged($user->fresh(), false));
         }
 
         Auth::guard('web')->logout();

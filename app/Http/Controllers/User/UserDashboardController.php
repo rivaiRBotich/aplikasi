@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\ChatRoom; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Events\TopupCreated;
 
 class UserDashboardController extends Controller
 {
@@ -52,12 +53,21 @@ class UserDashboardController extends Controller
             'proof_image.required'=> 'Bukti transfer wajib diunggah.',
             'proof_image.image'   => 'File yang diunggah harus berupa file gambar.',
             'proof_image.mimes'   => 'Format gambar tidak cocok! Sistem hanya menerima format: jpeg, png, jpg, atau webp.',
-            'proof_image.max'     => 'Ukuran gambar terlalu besar! Maksimal ukuran file adalah 2MB.',
+            'proof_image.max'     => 'Ukuran gambar terlalu besar! Maksimal ukuran file adalah 2MB.',   
         ]);
 
         $imagePath = $request->file('proof_image')->store('proofs', 'public');
 
-        DB::table('topups')->insert([
+        // DB::table('topups')->insert([
+        //     'user_id' => Auth::id(),
+        //     'amount' => $request->amount,
+        //     'proof_image' => $imagePath,
+        //     'status' => 'pending',
+        //     'created_at' => now(),
+        //     'updated_at' => now()
+        // ]);
+
+        $topupId = DB::table('topups')->insertGetId([
             'user_id' => Auth::id(),
             'amount' => $request->amount,
             'proof_image' => $imagePath,
@@ -65,6 +75,15 @@ class UserDashboardController extends Controller
             'created_at' => now(),
             'updated_at' => now()
         ]);
+ 
+        // ✅ BARU — broadcast supaya dashboard & halaman topup admin update real-time
+        broadcast(new TopupCreated(
+            topupId: $topupId,
+            userName: Auth::user()->name,
+            amount: (int) $request->amount,
+            proofImage: $imagePath,
+            createdAt: now()->format('d M Y H:i'),
+        ));
 
         return redirect()->back()->with('success', 'Permohonan top-up berhasil dikirim! Menunggu konfirmasi admin Klinik MBC.');
     }
