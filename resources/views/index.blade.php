@@ -86,10 +86,10 @@
                             <p class="text-[10px] text-[#A9842E] uppercase font-bold tracking-widest">Layanan Aktif</p>
                             <p class="text-xs md:text-sm font-bold text-[#3D2E1F] mt-0.3">kesehatan umum, kesehatan gigi & mulut, serta aesthetic</p>
                         </div>
-                        <span class="flex h-2.5 w-2.5 relative shrink-0">
+                        <!-- <span class="flex h-2.5 w-2.5 relative shrink-0">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                        </span>
+                        </span> -->
                     </div>
                 </div>
             </div>
@@ -106,29 +106,33 @@
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach($products as $product)
+            @foreach($treatment as $treatments)
             <!-- Card Utama Putih -->
             <div class="bg-white rounded-3xl p-5 border border-[#E0D2AE]/30 shadow-xs hover:shadow-md transition duration-300 flex flex-col justify-between group">
                 <div>
                     <!-- Container Gambar dengan padding bagian dalam -->
                     <div class="w-full h-60 rounded-2xl overflow-hidden relative bg-stone-50">
-                        <img src="{{ asset('storage/' . $product['image']) }}" alt="{{ $product['name'] }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="{{ asset('storage/' . $treatments['image']) }}" alt="{{ $treatments['name'] }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     
                     <!-- Konten Deskripsi -->
                     <div class="mt-5">
-                        <span class="text-[10px] font-bold bg-[#F7F1E6] text-[#A9842E] px-2.5 py-1 rounded-md uppercase tracking-wider border border-[#E0D2AE]/20">{{ $product['solution'] }}</span>
-                        <h3 class="font-bold text-base md:text-lg text-[#3D2E1F] mt-3 group-hover:text-[#A9842E] transition duration-300">{{ $product['name'] }}</h3>
+                        <span class="text-[10px] font-bold bg-[#F7F1E6] text-[#A9842E] px-2.5 py-1 rounded-md uppercase tracking-wider border border-[#E0D2AE]/20">{{ $treatments['solution'] }}</span>
+                        <h3 class="font-bold text-base md:text-lg text-[#3D2E1F] mt-3 group-hover:text-[#A9842E] transition duration-300">{{ $treatments['name'] }}</h3>
                     </div>
                 </div>
                 
                 <!-- Bagian Harga -->
                 <div class="mt-6 pt-4 border-t border-stone-100 flex justify-between items-center">
                     <span class="text-xs text-stone-400 font-medium">Harga Resmi</span>
-                    <span class="font-extrabold text-[#A9842E] text-base md:text-lg">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
+                    <span class="font-extrabold text-[#A9842E] text-base md:text-lg">Rp {{ number_format($treatments['price'], 0, ',', '.') }}</span>
                 </div>
             </div>
             @endforeach
+            
+        </div>
+        <div class="mt-10 flex justify-center">
+            {{ $treatment->fragment('treatments')->links() }}
         </div>
         </div>
     </section>
@@ -167,6 +171,9 @@
             </div>
             @endforeach
         </div>
+        <div class="mt-10 flex justify-center">
+            {{ $products->fragment('solutins')->links() }}
+        </div>
         </div>
     </section>
 
@@ -202,6 +209,9 @@
                     </div>
                 </article>
                 @endforeach
+            </div>
+            <div class="mt-10 flex justify-center">
+                {{ $portfolios->fragment('portofolio')->links() }}
             </div>
         </div>
     </section>
@@ -239,6 +249,71 @@
                 </article>
                 @endforeach
             </div>
+        </div>
+    </section>
+
+    {{-- Contact Section --}}
+    <section id="contact" class="py-24 bg-[#F7F1E6]/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid md:grid-cols-2 gap-8 items-stretch">
+                
+                {{-- KOLOM KIRI: INFO KONTAK --}}
+                <div class="bg-white rounded-3xl p-8 md:p-10 border border-[#E0D2AE]/30 shadow-xs flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-[#A9842E] text-xs font-bold uppercase tracking-widest block mb-2">CONTACT</span>
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-[#3D2E1F] tracking-tight">MBC Clinic</h2>
+                        </div>
+
+                        <div class="space-y-4 text-xs md:text-sm leading-relaxed text-stone-600">
+                            {{-- WhatsApp --}}
+                            <div>
+                                <h4 class="font-bold text-[#3D2E1F] text-sm mb-1">WhatsApp</h4>
+                                <p class="hover:text-[#A9842E] transition"><a href="https://wa.me/6282379070021" target="_blank">+62 823-7907-0021</a></p>
+                            </div>
+
+                            {{-- Alamat --}}
+                            <div>
+                                <h4 class="font-bold text-[#3D2E1F] text-sm mb-1">Alamat</h4>
+                                <p>Jl. Gatot Subroto No.76, RT.RW.KW:7/RW.4, Lalang, Kec. Medan Sunggal, Kota Medan, Sumatera Utara 20122</p>
+                            </div>
+
+                            {{-- Jam Operasional --}}
+                            <div>
+                                <h4 class="font-bold text-[#3D2E1F] text-sm mb-1">Jam Operasional</h4>
+                                <p>Senin - Minggu, 10.00 - 19.00 WIB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Tombol Aksi --}}
+                    <div class="mt-8 space-y-3">
+                        <a href="https://wa.me/6282379070021" target="_blank" class="block w-full text-center bg-[#2F4335] hover:bg-[#223227] text-white py-3.5 px-6 rounded-2xl font-semibold text-xs md:text-sm transition duration-300 shadow-sm">
+                            Chat WhatsApp
+                        </a>
+                        <a href="https://maps.app.goo.gl/2MsSsL34Fj8Wnt2b9" target="_blank" class="block w-full text-center bg-white border border-stone-200 text-stone-700 hover:bg-[#F7F1E6] hover:border-[#A9842E]/30 py-3.5 px-6 rounded-2xl font-semibold text-xs md:text-sm transition duration-300 shadow-xs">
+                            Lihat di Google Maps
+                        </a>
+                    </div>
+                </div>
+
+                {{-- KOLOM KANAN: MAP EMBED --}}
+                <div class="bg-white rounded-3xl p-4 border border-[#E0D2AE]/30 shadow-xs min-h-[400px] flex">
+                    <div class="w-full h-full rounded-2xl overflow-hidden relative border border-stone-100">
+                        {{-- Google Maps Iframe (Ganti src iFrame ini dengan link embed asli dari Google Maps Anda jika diperlukan) --}}
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.9718572308007!2d98.61559237473243!3d3.5939268963802187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312fc699e213f7%3A0xba5e190570042121!2sMBC%20Clinic%20Medan!5e0!3m2!1sid!2sid!4v1782040426516!5m2!1sid!2sid" 
+                            class="w-full h-full min-h-[380px] md:min-h-full border-0"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </section>
     

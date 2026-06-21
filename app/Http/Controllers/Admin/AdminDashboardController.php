@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Portfolio;
+use App\Models\Treatment;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -55,7 +56,37 @@ class AdminDashboardController extends Controller
         return redirect()->back()->with('success', 'Produk sukses ditambahkan');
     }
 
-    // 3. Menu Manajemen Portofolio (Dengan Upload File & Pagination)
+    // 3. Menu Manajemen treatment (Dengan Upload File & Pagination)
+    public function treatment()
+    {
+        // Menampilkan 5 produk per halaman
+        $treatment = Treatment::latest()->paginate(5);
+        return view('admin.treatment', compact('treatment'));
+    }
+
+    public function storeTreatment(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'solution' => 'required|string',
+            'price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        // Proses simpan file gambar ke folder storage/app/public/products
+        $imagePath = $request->file('image')->store('treatment', 'public');
+
+        Treatment::create([
+            'name' => $request->name,
+            'solution' => $request->solution,
+            'price' => $request->price,
+            'image' => $imagePath,
+        ]);
+
+        return redirect()->back()->with('success', 'treatment sukses ditambahkan');
+    }
+
+    // 4. Menu Manajemen Portofolio (Dengan Upload File & Pagination)
     public function portfolios()
     {
         $portfolios = Portfolio::latest()->paginate(5);
@@ -84,7 +115,7 @@ class AdminDashboardController extends Controller
         return redirect()->back()->with('success', 'Portofolio sukses diposting');
     }
 
-    // 4. Menu Manajemen Top-up Saldo User
+    // 5. Menu Manajemen Top-up Saldo User
     public function topups()
     {
         $topups = DB::table('topups')
@@ -116,7 +147,7 @@ class AdminDashboardController extends Controller
         return redirect()->back()->with('error', 'Data tidak ditemukan atau sudah diproses.');
     }
 
-    // 5. Menu Takeover Chat Instan (Admin Balas Chat & Refund Saldo Pasien)
+    // 6. Menu Takeover Chat Instan (Admin Balas Chat & Refund Saldo Pasien)
     public function activeChats()
     {
         // Menampilkan chat rooms yang dialihkan ke admin karena dokter offline
@@ -170,6 +201,22 @@ class AdminDashboardController extends Controller
         return redirect()->back()->with('success', 'Produk berhasil dihapus dari server!');
     }
 
+    // Hapus Treatment & Gambarnya dari Server
+    public function destroyTreatment($id)
+    {
+        $treatment = Treatment::findOrFail($id);
+
+        // Hapus file gambar asli dari folder storage/app/public/products jika ada
+        if ($treatment->image && Storage::disk('public')->exists($treatment->image)) {
+            Storage::disk('public')->delete($treatment->image);
+        }
+
+        $treatment->delete();
+
+        return redirect()->back()->with('success', 'Treatment berhasil dihapus dari server!');
+    }
+
+    
     // Hapus Portofolio & Gambarnya dari Server
     public function destroyPortfolio($id)
     {

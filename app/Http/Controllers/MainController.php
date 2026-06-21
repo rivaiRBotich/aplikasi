@@ -10,8 +10,11 @@ class MainController extends Controller
     {
         // Data portofolio/kegiatan tiruan (Nanti diambil dari database admin)
         // Mengambil data asli dari database
-        $portfolios = \App\Models\Portfolio::latest()->take(3)->get()->toArray();
-        $products = \App\Models\Product::latest()->take(3)->get()->toArray();
-        return view('index', compact('portfolios', 'products'));
+        $portfolios = \App\Models\Portfolio::latest()->paginate(3, ['*'], 'portofolios_page');
+        $products = \App\Models\Product::latest()->paginate(3, ['*'], 'products_page');
+        // $treatment = \App\Models\Treatment::latest()->take(4)->get()->toArray();
+        $treatment = \App\Models\Treatment::latest()->paginate(3, ['*'], 'treatment_page');
+
+        return view('index', compact('portfolios', 'products','treatment'));
     }
 }

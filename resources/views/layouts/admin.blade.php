@@ -32,6 +32,9 @@
                 <a href="{{ route('admin.products') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm transition font-medium {{ Request::routeIs('admin.products') ? 'bg-teal-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     <i class="fa-solid fa-box w-5"></i> <span>Manajemen Produk</span>
                 </a>
+                <a href="{{ route('admin.treatment') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm transition font-medium {{ Request::routeIs('admin.treatment') ? 'bg-teal-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    <i class="fa-solid fa-newspaper w-5"></i> <span>Post Treatment</span>
+                </a>
                 <a href="{{ route('admin.portfolios') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm transition font-medium {{ Request::routeIs('admin.portfolios') ? 'bg-teal-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     <i class="fa-solid fa-newspaper w-5"></i> <span>Post Portofolio</span>
                 </a>

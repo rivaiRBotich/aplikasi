@@ -34,11 +34,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/portfolios', [AdminDashboardController::class, 'portfolios'])->name('admin.portfolios');
     Route::get('/admin/topups', [AdminDashboardController::class, 'topups'])->name('admin.topups');
     Route::get('/admin/chats', [AdminDashboardController::class, 'activeChats'])->name('admin.chats');
+    Route::get('/admin/treatment', [AdminDashboardController::class, 'treatment'])->name('admin.treatment');
 
     // Aksi Bisnis Admin
     Route::post('/admin/tariff/update', [AdminDashboardController::class, 'updateTariff'])->name('admin.tariff.update');
     Route::post('/admin/product/store', [AdminDashboardController::class, 'storeProduct'])->name('admin.product.store');
+    Route::post('/admin/treatment/store', [AdminDashboardController::class, 'storeTreatment'])->name('admin.treatment.store');
     Route::post('/admin/portfolio/store', [AdminDashboardController::class, 'storePortfolio'])->name('admin.portfolio.store');
+    Route::delete('/admin/treatment/delete/{id}', [AdminDashboardController::class, 'destroyTreatment'])->name('admin.treatment.delete');
     Route::get('/admin/topup/verify/{id}/{status}', [AdminDashboardController::class, 'verifyTopup'])->name('admin.topup.verify');
     Route::post('/admin/chat/refund/{id}', [AdminDashboardController::class, 'refundChat'])->name('admin.chat.refund');
     Route::delete('/admin/product/delete/{id}', [AdminDashboardController::class, 'destroyProduct'])->name('admin.product.delete');
