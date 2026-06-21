@@ -31,10 +31,10 @@
                 </div>
                 <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide">
                     <a href="#" class="text-[#A9842E] font-semibold transition duration-300">Beranda</a>
-                    <a href="#treatments" class="text-stone-600 hover:text-[#A9842E] transition duration-300">treatments</a>
+                    <a href="#treatments" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Treatments</a>
                     <a href="#solutions" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Produk</a>
                     <a href="#portfolio" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Portofolio & Kegiatan</a>
-                    <a href="#dokter" class="text-stone-600 hover:text-[#A9842E] transition duration-300">tim kami</a>
+                    <a href="#dokter" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Tim kami</a>
                     <a href="#about" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Tentang Kami</a>
                     <a href="#contact" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Contact</a>
                 </div>
