@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'dokter.umum@mbc.com',
             'password' => Hash::make('password123'),
             'role' => 'doctor',
+            'clinic_category'=>'umum',
             'balance' => 0,
         ]);
 
@@ -37,6 +38,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'dokter.kecantikan@mbc.com',
             'password' => Hash::make('password123'),
             'role' => 'doctor',
+            'clinic_category'=>'kecantikan',
             'balance' => 0,
         ]);
 
@@ -46,6 +48,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'dokter.gigi@mbc.com',
             'password' => Hash::make('password123'),
             'role' => 'doctor',
+            'clinic_category'=>'gigi',
             'balance' => 0,
         ]);
 

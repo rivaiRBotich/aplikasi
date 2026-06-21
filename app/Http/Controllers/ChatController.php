@@ -93,7 +93,12 @@ class ChatController extends Controller
             abort(403);
         }
 
-        if ($room->status !== 'active') {
+        // if ($room->status !== 'active') {
+        //     return response()->json(['error' => 'Sesi konsultasi ini sudah berakhir.'], 403);
+        // }
+
+        // Hanya ditolak kalau room sudah 'closed' (sesi selesai)
+        if ($room->status === 'closed') {
             return response()->json(['error' => 'Sesi konsultasi ini sudah berakhir.'], 403);
         }
 
@@ -110,6 +115,7 @@ class ChatController extends Controller
         return response()->json([
             'status'  => 'Pesan terkirim!',
             'message' => $msg->load('sender'),
+            'room_status' => $room->status,
         ]);
     }
 

@@ -51,17 +51,6 @@
                 </div>
             </div>
         @endforeach
-
-        {{-- ✅ BARU — indikator menunggu balasan dokter --}}
-        <div id="waiting-doctor-indicator" class="{{ ($room->status === 'pending' && $messages->isNotEmpty()) ? '' : 'hidden' }} flex justify-start">
-            <div class="bg-amber-50 border border-amber-200 text-amber-700 rounded-2xl rounded-bl-none px-4 py-2.5 text-xs flex items-center gap-2">
-                <span class="flex h-2 w-2 relative shrink-0">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                </span>
-                Sedang menunggu balasan dokter...
-            </div>
-        </div>
     </div>
 
     <footer class="bg-white border-t border-slate-200 p-4 shrink-0 shadow-lg">
@@ -78,21 +67,55 @@
             </form>
         @endif
     </footer>
+<!-- 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/8.3.0/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.16.0/dist/echo.iife.js"></script> -->
 
-    <script>
+    <!-- <script>
         const chatBox = document.getElementById('chat-box');
         const chatForm = document.getElementById('chat-form');
         const messageInput = document.getElementById('message-input');
-        const waitingIndicator = document.getElementById('waiting-doctor-indicator');
         const currentUserId = {{ $user->id }};
-        const currentUserRole = "{{ auth()->user()->role }}";
         const roomId = {{ $room->id }};
 
-        // Auto scroll ke bawah saat halaman dibuka
+        // Otomatis scroll box chat ke posisi paling bawah begitu halaman terbuka
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Fungsi append bubble chat — SAMA PERSIS seperti versi kamu yang sudah jalan,
-        // hanya diubah target insertAdjacentHTML agar selalu masuk SEBELUM indikator menunggu
+        // == INISIALISASI MURNI TANPA VITE COMPILER ==
+        // == INISIALISASI CDN DENGAN AUTH HEADER MANUAL ==
+        if (typeof LaravelEcho !== 'undefined') {
+            window.Echo = new LaravelEcho({
+                broadcaster: 'reverb',
+                key: '{{ env("REVERB_APP_KEY") }}',
+                wsHost: '127.0.0.1',
+                wsPort: {{ env("REVERB_PORT", 8080) }},
+                wssPort: {{ env("REVERB_PORT", 8080) }},
+                forceTLS: false,
+                enabledTransports: ['ws', 'wss'],
+                // == TAMBAHKAN BERIKUT AGAR TIDAK NULL ==
+                authEndpoint: '/broadcasting/auth',
+                auth: {
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                }
+            });
+
+            console.log('Mencoba menyambungkan Echo CDN ke channel private-chat.room.' + roomId);
+
+            window.Echo.private(`chat.room.${roomId}`)
+                .listen('.message.sent', (data) => {
+                    console.log("Pesan masuk real-time via CDN:", data);
+                    if (parseInt(data.message.sender_id) !== parseInt(currentUserId)) {
+                        appendMessage(data.message);
+                    }
+                })
+                .error((err) => {
+                    console.error("Gagal otorisasi channel private:", err);
+                });
+        }
+
+        // 2. Fungsi untuk Menempelkan Bubble Chat Baru ke Layar Monitor
         function appendMessage(msg) {
             const isMe = parseInt(msg.sender_id) === parseInt(currentUserId);
             const alignClass = isMe ? 'justify-end' : 'justify-start';
@@ -121,20 +144,84 @@
                 </div>
             `;
 
-            waitingIndicator.insertAdjacentHTML('beforebegin', messageHtml);
+            chatBox.insertAdjacentHTML('beforeend', messageHtml);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        function showWaitingIndicator() {
-            waitingIndicator.classList.remove('hidden');
+        // 3. Aksi Pengiriman Pesan Menggunakan AJAX (POST)
+        if (chatForm) {
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const text = messageInput.value.trim();
+                if (!text) return;
+
+                messageInput.value = '';
+
+                fetch(`/chat/room/${roomId}/send`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ message: text })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        appendMessage(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Gagal mengirim pesan:', error);
+                });
+            });
+        }
+    </script> -->
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const chatForm = document.getElementById('chat-form');
+        const messageInput = document.getElementById('message-input');
+        const currentUserId = {{ $user->id }};
+        const roomId = {{ $room->id }};
+
+        // Auto scroll ke bawah saat halaman dibuka
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Fungsi append bubble chat
+        function appendMessage(msg) {
+            const isMe = parseInt(msg.sender_id) === parseInt(currentUserId);
+            const alignClass = isMe ? 'justify-end' : 'justify-start';
+            const bubbleClass = isMe ? 'bg-teal-600 text-white rounded-br-none' : 'bg-white text-slate-800 rounded-bl-none border border-slate-100';
+            
+            const timeStr = new Date(msg.created_at).toLocaleTimeString('id-ID', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+            }).replace('.', ':');
+
+            let senderName = 'User';
+            if (msg.sender) {
+                senderName = msg.sender.name;
+            } else {
+                senderName = isMe ? "{{ $user->name }}" : "{{ auth()->user()->role === 'doctor' ? ($room->patient->name ?? 'Pasien') : ($room->doctor->name ?? 'Dokter') }}";
+            }
+
+            const messageHtml = `
+                <div class="flex ${alignClass}">
+                    <div class="max-w-[70%] rounded-2xl px-4 py-2.5 shadow-sm text-sm ${bubbleClass}">
+                        <p class="text-[10px] opacity-60 font-bold mb-0.5">${senderName}</p>
+                        <p class="leading-relaxed">${msg.message}</p>
+                        <p class="text-[9px] opacity-50 text-right mt-1">${timeStr}</p>
+                    </div>
+                </div>
+            `;
+
+            chatBox.insertAdjacentHTML('beforeend', messageHtml);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        function hideWaitingIndicator() {
-            waitingIndicator.classList.add('hidden');
-        }
-
-        // ✅ ECHO LISTENER — PERSIS seperti versi kamu yang sudah jalan, tanpa filter sender_id tambahan
+        // ✅ ECHO LISTENER — taruh di sini
         document.addEventListener('DOMContentLoaded', function() {
             if (!window.Echo) {
                 console.error('Echo tidak tersedia! Cek app.js & bootstrap.js');
@@ -146,20 +233,14 @@
             window.Echo.private(`chat.room.${roomId}`)
                 .listen('.message.sent', (data) => {
                     console.log('Pesan masuk real-time:', data);
-                    const msg = data.message ?? data;
-                    appendMessage(msg);
-
-                    // Kalau yang login adalah pasien dan menerima balasan dari orang lain, sembunyikan indikator menunggu
-                    if (currentUserRole === 'user' && parseInt(msg.sender_id) !== parseInt(currentUserId)) {
-                        hideWaitingIndicator();
-                    }
+                    appendMessage(data.message ?? data);
                 })
                 .error((err) => {
                     console.error('Gagal otorisasi channel:', err);
                 });
         });
 
-        // Kirim pesan via AJAX — PERSIS seperti versi kamu yang sudah jalan
+        // Kirim pesan via AJAX
         if (chatForm) {
             chatForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -177,28 +258,15 @@
                     },
                     body: JSON.stringify({ message: text })
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(err => { throw new Error(err.error || 'Gagal mengirim pesan'); });
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     if (data.message) {
                         appendMessage(data.message);
                     }
-
-                    // ✅ Kalau pasien kirim & room masih pending, tampilkan indikator menunggu
-                    if (currentUserRole === 'user' && data.room_status === 'pending') {
-                        showWaitingIndicator();
-                    }
                 })
                 .catch(error => {
                     console.error('Gagal mengirim pesan:', error);
-                    alert(error.message || 'Gagal mengirim pesan. Silakan coba lagi.');
                 });
             });
         }
     </script>
-</body>
-</html>
