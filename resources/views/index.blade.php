@@ -222,7 +222,7 @@
             <div class="text-center md:text-left max-w-3xl mb-16">
                 <span class="text-[#A9842E] text-xs font-bold uppercase tracking-widest bg-white px-3 py-1.5 rounded-md border border-[#E0D2AE]/40">Our Doctor</span>
                 <h2 class="text-3xl font-extrabold text-[#3D2E1F] mt-4 tracking-tight">Dokter & Tenaga Ahli Kami</h2>
-                <p class="text-stone-500 text-sm md:text-base mt-2">Tim profesional Dermalux yang siap memberikan perawatan terbaik untuk Anda.</p>
+                <p class="text-stone-500 text-sm md:text-base mt-2">Tim profesional MBC Clinic yang siap memberikan perawatan terbaik untuk Anda.</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
