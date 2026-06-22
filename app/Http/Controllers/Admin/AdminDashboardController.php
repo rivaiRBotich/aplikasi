@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Portfolio;
 use App\Models\Treatment;
+use App\Models\AccountBank;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -22,8 +23,9 @@ class AdminDashboardController extends Controller
         $totalDoctors = User::where('role', 'doctor')->count();
         $pendingTopups = DB::table('topups')->where('status', 'pending')->count();
         $tariffs = DB::table('chat_tariffs')->get();
+        $bank = DB::table('acount_bank')->first();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalDoctors', 'pendingTopups', 'tariffs'));
+        return view('admin.dashboard', compact('totalUsers', 'totalDoctors', 'pendingTopups', 'tariffs','bank'));
     }
 
     // 2. Menu Manajemen Produk (Dengan Upload File & Pagination)
@@ -186,6 +188,17 @@ class AdminDashboardController extends Controller
         return redirect()->back()->with('success', 'Tarif chat berhasil diperbarui!');
     }
 
+    public function updateBank(Request $request)
+    {
+        DB::table('acount_bank')->update([
+            'nama_bank'=> $request->nama_bank,
+            'account'=> $request->account,
+            'nama_penerima'=> $request->nama_penerima,
+        ]);
+        
+        return redirect()->back()->with('success', 'acount Bank berhasil diperbarui!');
+    }
+
     // Hapus Produk & Gambarnya dari Server
     public function destroyProduct($id)
     {
@@ -254,6 +267,7 @@ class AdminDashboardController extends Controller
             'email' => $request->email,
             'role' => 'doctor',
             'specialist' => $request->specialist,
+            'clinic_category' => $request->specialist,
             'password' => \Illuminate\Support\Facades\Hash::make($request->password),
             'balance' => 0,
         ]);

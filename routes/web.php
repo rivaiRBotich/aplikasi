@@ -35,8 +35,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/topups', [AdminDashboardController::class, 'topups'])->name('admin.topups');
     Route::get('/admin/chats', [AdminDashboardController::class, 'activeChats'])->name('admin.chats');
     Route::get('/admin/treatment', [AdminDashboardController::class, 'treatment'])->name('admin.treatment');
-
+    // Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     // Aksi Bisnis Admin
+    Route::post('/admin/bank/update', [AdminDashboardController::class, 'updateBank'])->name('admin.bank.update');
     Route::post('/admin/tariff/update', [AdminDashboardController::class, 'updateTariff'])->name('admin.tariff.update');
     Route::post('/admin/product/store', [AdminDashboardController::class, 'storeProduct'])->name('admin.product.store');
     Route::post('/admin/treatment/store', [AdminDashboardController::class, 'storeTreatment'])->name('admin.treatment.store');

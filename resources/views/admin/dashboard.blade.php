@@ -38,6 +38,53 @@
         </form>
     </div>
 
+    <!-- Input Bank -->
+    <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+        <h3 class="text-sm font-bold text-slate-900 mb-4 uppercase tracking-wider text-slate-400">Update Account bank</h3>
+        <form action="{{ route('admin.bank.update') }}" method="POST" class="space-y-4">
+            @csrf
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">
+                    Nama Bank
+                </label>
+                <input
+                    type="text"
+                    name="nama_bank"
+                    placeholder="Masukkan Nama Bank : Contoh Bank BCA"
+                    value="{{ $bank-> nama_bank}}"
+                    class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">
+                    Account Rekening Bank
+                </label>
+                <input
+                    type="text"
+                    name="account"
+                    placeholder="Input Acount bank contoh :822-xxxx-xxx"
+                    value="{{ $bank-> account}}"
+                    class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5">
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">
+                    Nama Penerima
+                </label>
+                <input
+                    type="text"
+                    name="nama_penerima"
+                    placeholder="Input Nama Penerima"
+                    value="{{ $bank-> nama_penerima}}"
+                    class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5">
+            </div>
+
+            <button
+                type="submit"
+                class="bg-slate-950 hover:bg-slate-800 text-white font-medium py-2.5 px-5 rounded-xl text-sm transition">
+                Simpan Pengaturan
+            </button>
+        </form>
+    </div>
     {{-- ✅ BARU — Toast notifikasi muncul saat ada topup baru masuk --}}
     <div id="topup-toast" class="hidden fixed bottom-6 right-6 bg-white border border-rose-200 shadow-xl rounded-2xl p-4 max-w-sm z-50">
         <div class="flex items-start gap-3">

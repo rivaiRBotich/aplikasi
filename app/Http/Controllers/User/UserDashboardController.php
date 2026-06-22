@@ -9,12 +9,14 @@ use App\Models\ChatRoom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Events\TopupCreated;
+use App\Models\AccountBank;
 
 class UserDashboardController extends Controller
 {
     // 1. Halaman Utama Pasien
     public function index()
-    {
+    {   
+        $bank = DB::table('acount_bank')->first();
         $user = Auth::user();
 
         // == FIX 1: Menggunakan whereIn agar status 'pending' ATAU 'active' terbaca sempurna ==
@@ -37,7 +39,7 @@ class UserDashboardController extends Controller
         $doctors = User::where('role', 'doctor')
         ->select('id', 'name', 'clinic_category', 'is_online', 'last_seen_at')
         ->get();
-        return view('dashboard', compact('user', 'activeChat', 'chatHistory', 'tariffs', 'topups','doctors'));
+        return view('dashboard', compact('user', 'activeChat', 'chatHistory', 'tariffs', 'topups','doctors','bank'));
     }
 
     // 2. Proses Pengajuan Top-up Saldo (Upload Bukti)

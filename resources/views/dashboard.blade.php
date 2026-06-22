@@ -65,8 +65,8 @@
                 {{-- Detail Rekening dengan background premium glassmorphism --}}
                 <div class="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/10 text-sm max-w-xs space-y-1.5 z-10 w-full sm:w-auto relative">
                     <p class="font-bold text-teal-400 flex items-center gap-1.5 text-xs uppercase tracking-wider"><i class="fa-solid fa-bank"></i> Rekening Top-up:</p>
-                    <p class="font-black text-base text-slate-100 tracking-wide">Bank BCA: 822-0192-XXX</p>
-                    <p class="text-[11px] text-slate-400 font-semibold leading-tight">a.n PT Sekantin Engineering<br>(MBC Clinic)</p>
+                    <p class="font-black text-base text-slate-100 tracking-wide">{{$bank->nama_bank}}: {{$bank->account}}</p>
+                    <p class="text-[11px] text-slate-400 font-semibold leading-tight">a.n {{$bank->nama_penerima}}</p>
                 </div>
 
                 {{-- Watermark Logo Transparan di Sisi Background Belakang --}}

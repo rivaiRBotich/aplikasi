@@ -39,7 +39,7 @@
                     <td class="py-3 font-bold text-slate-800">{{ $doc->name }}<br><span class="text-xs font-normal text-slate-400">{{ $doc->email }}</span></td>
                     <td class="py-3">
                         <span class="px-2.5 py-1 text-xs rounded-full font-semibold {{ $doc->specialist == 'kecantikan' ? 'bg-pink-50 text-pink-700' : ($doc->specialist == 'gigi' ? 'bg-sky-50 text-sky-700' : 'bg-emerald-50 text-emerald-700') }}">
-                            {{ ucfirst($doc->specialist) }}
+                            {{ ucfirst($doc->clinic_category) }}
                         </span>
                     </td>
                     <td class="py-3 flex justify-center space-x-2">
