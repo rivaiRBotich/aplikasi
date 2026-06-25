@@ -97,83 +97,160 @@
     </section>
 
     {{-- treatments --}}
-    <section id="treatments" class="py-24 bg-[#F7F1E6]/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center md:text-left max-w-3xl mb-16">
-                <span class="text-[#A9842E] text-xs font-bold uppercase tracking-widest bg-white px-3 py-1.5 rounded-md border border-[#E0D2AE]/40">Treatments</span>
-                <h2 class="text-3xl font-extrabold text-[#3D2E1F] mt-4 tracking-tight">Layanan Treatment</h2>
-                <p class="text-stone-500 text-sm md:text-base mt-2">Temukan berbagai treatment yang disesuaikan dengan kebutuhan Anda, untuk hasil yang lebih sehat, terawat, dan percaya diri.</p>
+    <section id="treatments" class="py-24 bg-[#F7F1E6]/30 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div class="max-w-2xl text-center md:text-left">
+                    <span class="text-[#A9842E] text-xs font-bold uppercase tracking-widest bg-white px-3 py-1.5 rounded-lg border border-[#E0D2AE]/40 shadow-xs">
+                        Treatments
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[#3D2E1F] mt-4 tracking-tight leading-none">
+                        Layanan Treatment
+                    </h2>
+                    <p class="text-stone-500 text-sm md:text-base mt-4 leading-relaxed">
+                        Temukan berbagai treatment yang disesuaikan dengan kebutuhan Anda, untuk hasil yang lebih sehat, terawat, dan percaya diri.
+                    </p>
+                </div>
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach($treatment as $treatments)
-            <!-- Card Utama Putih -->
-            <div class="bg-white rounded-3xl p-5 border border-[#E0D2AE]/30 shadow-xs hover:shadow-md transition duration-300 flex flex-col justify-between group">
-                <div>
-                    <!-- Container Gambar dengan padding bagian dalam -->
-                    <div class="w-full h-60 rounded-2xl overflow-hidden relative bg-stone-50">
-                        <img src="{{ asset('storage/' . $treatments['image']) }}" alt="{{ $treatments['name'] }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                @foreach($treatment as $treatments)
+                <div class="bg-white rounded-3xl p-5 border border-[#E0D2AE]/20 shadow-[0_4px_20px_-4px_rgba(224,210,174,0.12)] hover:shadow-[0_10px_30px_-10px_rgba(169,132,46,0.2)] hover:border-[#E0D2AE]/60 transition-all duration-500 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden relative bg-stone-100 border border-stone-100">
+                            <img src="{{ asset('storage/' . $treatments['image']) }}" 
+                                alt="{{ $treatments['name'] }}" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                            <div class="absolute inset-0 bg-gradient-to-t from-stone-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <span class="text-[10px] font-bold bg-[#F7F1E6] text-[#A9842E] px-3 py-1 rounded-md uppercase tracking-wider border border-[#E0D2AE]/30">
+                                {{ $treatments['solution'] }}
+                            </span>
+                            <h3 class="font-bold text-base md:text-lg text-[#3D2E1F] mt-4 group-hover:text-[#A9842E] transition-colors duration-300 tracking-tight leading-snug">
+                                {{ $treatments['name'] }}
+                            </h3>
+                        </div>
                     </div>
                     
-                    <!-- Konten Deskripsi -->
-                    <div class="mt-5">
-                        <span class="text-[10px] font-bold bg-[#F7F1E6] text-[#A9842E] px-2.5 py-1 rounded-md uppercase tracking-wider border border-[#E0D2AE]/20">{{ $treatments['solution'] }}</span>
-                        <h3 class="font-bold text-base md:text-lg text-[#3D2E1F] mt-3 group-hover:text-[#A9842E] transition duration-300">{{ $treatments['name'] }}</h3>
+                    <div class="mt-6 pt-5 border-t border-stone-100/80 flex flex-col gap-4">
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-xs text-stone-400 font-medium tracking-wide">Harga Resmi</span>
+                            <span class="font-black text-[#A9842E] text-lg md:text-xl tracking-tight">
+                                Rp {{ number_format($treatments['price'], 0, ',', '.') }}
+                            </span>
+                        </div>
+                        
+                        <a href="https://wa.me/{{$bank?->phone}}?text={{ urlencode('Halo Admin MBC Clinic, Saya ingin bertanya tentang treatment ' . $treatments['name'] . '. Boleh minta info detailnya?') }}"
+                        target="_blank"
+                        class="w-full flex items-center justify-center gap-2 bg-[#F7F1E6]/60 hover:bg-[#25D366] text-[#2F4335] hover:text-white text-xs font-bold py-3 px-4 rounded-xl transition-all duration-300 border border-[#2F4335]/10 hover:border-transparent group/btn shadow-xs">
+                            <i class="fa-brands fa-whatsapp text-sm text-[#25D366] group-hover/btn:text-white transition-colors duration-300"></i> 
+                            Tanya Detail Treatment
+                        </a>
                     </div>
                 </div>
-                
-                <!-- Bagian Harga -->
-                <div class="mt-6 pt-4 border-t border-stone-100 flex justify-between items-center">
-                    <span class="text-xs text-stone-400 font-medium">Harga Resmi</span>
-                    <span class="font-extrabold text-[#A9842E] text-base md:text-lg">Rp {{ number_format($treatments['price'], 0, ',', '.') }}</span>
-                </div>
+                @endforeach
             </div>
-            @endforeach
-            
-        </div>
-        <div class="mt-10 flex justify-center">
-            {{ $treatment->fragment('treatments')->links() }}
-        </div>
+
+            <div class="mt-16 flex flex-col items-center gap-6">
+
+                @if(request('show_all_treatments'))
+                    {{-- Mode "semua" — tombol kembali ke pagination --}}
+                    <a href="{{ url()->current() }}#treatments"
+                    class="inline-flex items-center gap-2 bg-white border border-stone-200 text-stone-600 hover:text-[#A9842E] hover:border-[#A9842E]/40 hover:bg-[#F7F1E6]/30 text-xs font-bold px-6 py-3 rounded-full transition-all duration-300 shadow-xs">
+                        <i class="fa-solid fa-arrow-up-long text-[10px]"></i> Sembunyikan Layanan
+                    </a>
+                @else
+                    {{-- Mode pagination normal dengan style blur transparan yang baru kita buat --}}
+                    <div class="w-full flex justify-center">
+                        {{ $treatment->fragment('treatments')->links() }}
+                    </div>
+
+                    {{-- Tombol lihat semua --}}
+                    @if($treatment->hasMorePages())
+                    <a href="{{ request()->fullUrlWithQuery(['show_all_treatments' => 1]) }}#treatments"
+                    class="inline-flex items-center gap-2 bg-[#3D2E1F] hover:bg-[#A9842E] text-white text-xs font-bold px-7 py-3.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md tracking-wide">
+                        <i class="fa-solid fa-grip text-[10px]"></i> Tampilkan Semua Treatment
+                    </a>
+                    @endif
+                @endif
+
+            </div>
         </div>
     </section>
 
-    {{-- KATALOG PRODUK  --}}
-    <section id="solutions" class="py-24 bg-[#F7F1E6]/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center md:text-left max-w-3xl mb-16">
-                <span class="text-[#A9842E] text-xs font-bold uppercase tracking-widest bg-white px-3 py-1.5 rounded-md border border-[#E0D2AE]/40">Our Solutions</span>
-                <h2 class="text-3xl font-extrabold text-[#3D2E1F] mt-4 tracking-tight">Katalog Produk & Solusi Perawatan</h2>
-                <p class="text-stone-500 text-sm md:text-base mt-2">Dapatkan produk rekomendasi klinis terbaik yang dirancang spesifik untuk kebutuhan medis Anda.</p>
+    {{-- KATALOG PRODUK --}}
+    <section id="solutions" class="py-24 bg-[#F7F1E6]/30 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div class="max-w-2xl text-center md:text-left">
+                    <span class="text-[#A9842E] text-xs font-bold uppercase tracking-widest bg-white px-3 py-1.5 rounded-lg border border-[#E0D2AE]/40 shadow-xs">
+                        Our Solutions
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[#3D2E1F] mt-4 tracking-tight leading-none">
+                        Katalog Produk & Solusi Perawatan
+                    </h2>
+                    <p class="text-stone-500 text-sm md:text-base mt-4 leading-relaxed">
+                        Dapatkan produk rekomendasi klinis terbaik yang dirancang spesifik untuk kebutuhan medis Anda.
+                    </p>
+                </div>
             </div>
 
+            <!-- Grid Cards -->
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach($products as $product)
-            <!-- Card Utama Putih -->
-            <div class="bg-white rounded-3xl p-5 border border-[#E0D2AE]/30 shadow-xs hover:shadow-md transition duration-300 flex flex-col justify-between group">
-                <div>
-                    <!-- Container Gambar dengan padding bagian dalam -->
-                    <div class="w-full h-60 rounded-2xl overflow-hidden relative bg-stone-50">
-                        <img src="{{ asset('storage/' . $product['image']) }}" alt="{{ $product['name'] }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                @foreach($products as $product)
+                <!-- Card Utama Putih -->
+                <div class="bg-white rounded-3xl p-5 border border-[#E0D2AE]/20 shadow-[0_4px_20px_-4px_rgba(224,210,174,0.12)] hover:shadow-[0_10px_30px_-10px_rgba(169,132,46,0.2)] hover:border-[#E0D2AE]/60 transition-all duration-500 flex flex-col justify-between group">
+                    <div>
+                        <!-- Container Gambar Terbingkai Halus (Locked Aspect Ratio) -->
+                        <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden relative bg-stone-100 border border-stone-100">
+                            <img src="{{ asset('storage/' . $product['image']) }}" 
+                                alt="{{ $product['name'] }}" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                            <div class="absolute inset-0 bg-gradient-to-t from-stone-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+                        
+                        <!-- Konten Deskripsi -->
+                        <div class="mt-6">
+                            <span class="text-[10px] font-bold bg-[#F7F1E6] text-[#A9842E] px-3 py-1 rounded-md uppercase tracking-wider border border-[#E0D2AE]/30">
+                                {{ $product['solution'] }}
+                            </span>
+                            <h3 class="font-bold text-base md:text-lg text-[#3D2E1F] mt-4 group-hover:text-[#A9842E] transition-colors duration-300 tracking-tight leading-snug">
+                                {{ $product['name'] }}
+                            </h3>
+                        </div>
                     </div>
                     
-                    <!-- Konten Deskripsi -->
-                    <div class="mt-5">
-                        <span class="text-[10px] font-bold bg-[#F7F1E6] text-[#A9842E] px-2.5 py-1 rounded-md uppercase tracking-wider border border-[#E0D2AE]/20">{{ $product['solution'] }}</span>
-                        <h3 class="font-bold text-base md:text-lg text-[#3D2E1F] mt-3 group-hover:text-[#A9842E] transition duration-300">{{ $product['name'] }}</h3>
+                    <!-- Bagian Harga & Tombol Aksi -->
+                    <div class="mt-6 pt-5 border-t border-stone-100/80 flex flex-col gap-4">
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-xs text-stone-400 font-medium tracking-wide">Harga Resmi</span>
+                            <span class="font-black text-[#A9842E] text-lg md:text-xl tracking-tight">
+                                Rp {{ number_format($product['price'], 0, ',', '.') }}
+                            </span>
+                        </div>
+                        
+                        <!-- Tombol Pesan Produk via WhatsApp -->
+                        <a href="https://wa.me/{{$bank?->phone}}?text={{ urlencode('Halo Admin MBC CLINIC, Saya ingin memesan produk ' . $product['name'] . '. Apakah stoknya tersedia?') }}"
+                        target="_blank"
+                        class="w-full flex items-center justify-center gap-2 bg-[#F7F1E6]/60 hover:bg-[#25D366] text-[#2F4335] hover:text-white text-xs font-bold py-3 px-4 rounded-xl transition-all duration-300 border border-[#2F4335]/10 hover:border-transparent group/btn shadow-xs">
+                            <i class="fa-brands fa-whatsapp text-sm text-[#25D366] group-hover/btn:text-white transition-colors duration-300"></i> 
+                            Pesan Produk via WA
+                        </a>
                     </div>
                 </div>
-                
-                <!-- Bagian Harga -->
-                <div class="mt-6 pt-4 border-t border-stone-100 flex justify-between items-center">
-                    <span class="text-xs text-stone-400 font-medium">Harga Resmi</span>
-                    <span class="font-extrabold text-[#A9842E] text-base md:text-lg">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
-                </div>
+                @endforeach
             </div>
-            @endforeach
-        </div>
-        <div class="mt-10 flex justify-center">
-            {{ $products->fragment('solutins')->links() }}
-        </div>
+
+            <!-- Pagination Section -->
+            <div class="mt-16 flex justify-center">
+                {{ $products->fragment('solutions')->links() }}
+            </div>
+            
         </div>
     </section>
 

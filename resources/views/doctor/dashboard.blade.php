@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard Dokter - MBC Clinic</title>
     <link rel="icon" type="image/jpeg" href="{{ asset('images/logo_mbc.jpeg') }}">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -11,25 +12,31 @@
 </head>
 
 <script>
-    // Kirim heartbeat setiap 30 detik
+    // Heartbeat setiap 30 detik — tandai dokter masih online
     function sendHeartbeat() {
         fetch('/doctor/heartbeat', {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
                 'Content-Type': 'application/json',
-            }
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '',
+            },
+            keepalive: true,
         });
     }
 
-    sendHeartbeat(); // langsung kirim saat halaman dibuka
-    setInterval(sendHeartbeat, 30000); // setiap 30 detik
+    // Kirim langsung saat halaman dibuka
+    sendHeartbeat();
+    
+    // Kirim setiap 30 detik
+    const heartbeatInterval = setInterval(sendHeartbeat, 30000);
 
     // Tandai offline saat tab/browser ditutup
     window.addEventListener('beforeunload', function () {
-        navigator.sendBeacon('/doctor/offline', JSON.stringify({
-            _token: '{{ csrf_token() }}'
-        }));
+        clearInterval(heartbeatInterval);
+        navigator.sendBeacon('/doctor/offline', new Blob(
+            [JSON.stringify({ _token: document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') })],
+            { type: 'application/json' }
+        ));
     });
 </script>
 

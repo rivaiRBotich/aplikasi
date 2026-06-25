@@ -73,6 +73,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/chat/room/{id}', [ChatController::class, 'showSpace'])->name('chat.room');
     Route::post('/chat/room/{id}/send', [ChatController::class, 'sendMessage'])->name('chat.message.send');
+    Route::post('/doctor/heartbeat', function () {
+        if (auth()->check() && auth()->user()->role === 'doctor') {
+            DB::table('users')->where('id', auth()->id())->update([
+                'is_online'    => 1,
+                'last_seen_at' => now(),
+            ]);
+        }
+        return response()->json(['ok' => true]);
+    })->name('doctor.heartbeat');
+
+    Route::post('/doctor/offline', function () {
+        if (auth()->check() && auth()->user()->role === 'doctor') {
+            $user = auth()->user();
+            DB::table('users')->where('id', $user->id)->update([
+                'is_online'    => 0,
+                'last_seen_at' => now(),
+            ]);
+            broadcast(new \App\Events\UserOnlineStatusChanged($user->fresh(), false));
+        }
+        return response()->json(['ok' => true]);
+    })->name('doctor.offline');
+    
 });
 
 Route::middleware(['auth', 'verified'])->prefix('doctor')->name('doctor.')->group(function () {
@@ -84,25 +106,7 @@ Route::middleware(['auth', 'verified'])->prefix('doctor')->name('doctor.')->grou
     Route::post('/chat/room/{id}/end', [DoctorDashboardController::class, 'endChat'])->name('chat.end');
 });
 
-Route::post('/doctor/heartbeat', function () {
-    if (auth()->check() && auth()->user()->role === 'doctor') {
-        DB::table('users')->where('id', auth()->id())->update([
-            'is_online'    => 1,
-            'last_seen_at' => now(),
-        ]);
-    }
-    return response()->json(['ok' => true]);
-})->middleware('auth')->name('doctor.heartbeat');
 
-Route::post('/doctor/offline', function (Request $request) {
-    if (auth()->check() && auth()->user()->role === 'doctor') {
-        DB::table('users')->where('id', auth()->id())->update([
-            'is_online'    => 0,
-            'last_seen_at' => now(),
-        ]);
-    }
-    return response()->json(['ok' => true]);
-})->middleware('auth')->name('doctor.offline');
 
 Route::get('/chat/options', [BotChatController::class, 'showOptions'])->name('chat.options');
 Route::get('/chat/bot-guest', [BotChatController::class, 'showGuestBotChat'])->name('chat.bot.guest');

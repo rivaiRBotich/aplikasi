@@ -194,6 +194,7 @@ class AdminDashboardController extends Controller
             'nama_bank'=> $request->nama_bank,
             'account'=> $request->account,
             'nama_penerima'=> $request->nama_penerima,
+            'phone'=> $request->phone,
         ]);
         
         return redirect()->back()->with('success', 'acount Bank berhasil diperbarui!');

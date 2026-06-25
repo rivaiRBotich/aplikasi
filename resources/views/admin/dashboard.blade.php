@@ -78,6 +78,18 @@
                     class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5">
             </div>
 
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">
+                    Nomor Whatsapp
+                </label>
+                <input
+                    type="text"
+                    name="phone"
+                    placeholder="Input Nomor Whatsapp Contoh : 6285830136749"
+                    value="{{ $bank-> phone}}"
+                    class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5">
+            </div>
+
             <button
                 type="submit"
                 class="bg-slate-950 hover:bg-slate-800 text-white font-medium py-2.5 px-5 rounded-xl text-sm transition">

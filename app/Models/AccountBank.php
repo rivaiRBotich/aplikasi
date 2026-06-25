@@ -14,5 +14,6 @@ class AccountBank extends Model
         'nama_bank',
         'account',
         'nama_penerima',
+        'phone',
     ];
 }
