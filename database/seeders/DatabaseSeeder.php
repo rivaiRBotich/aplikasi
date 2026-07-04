@@ -61,10 +61,10 @@ class DatabaseSeeder extends Seeder
         //     'balance' => 150000, // Saldo awal Rp 150.000 untuk tes chat langsung nanti
         // ]);
 
-        // \DB::table('chat_tariffs')->insert([
-        //     ['category' => 'umum', 'price' => 25000, 'created_at' => now(), 'updated_at' => now()],
-        //     ['category' => 'kecantikan', 'price' => 50000, 'created_at' => now(), 'updated_at' => now()],
-        //     ['category' => 'gigi', 'price' => 35000, 'created_at' => now(), 'updated_at' => now()],
-        // ]);
+        \DB::table('chat_tariffs')->insert([
+            ['category' => 'umum', 'price' => 25000, 'created_at' => now(), 'updated_at' => now()],
+            ['category' => 'kecantikan', 'price' => 50000, 'created_at' => now(), 'updated_at' => now()],
+            ['category' => 'gigi', 'price' => 35000, 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 }
