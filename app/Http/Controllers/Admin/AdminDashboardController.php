@@ -72,6 +72,7 @@ class AdminDashboardController extends Controller
             'name' => 'required|string',
             'solution' => 'required|string',
             'price' => 'required|numeric',
+            'discount' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
@@ -82,10 +83,50 @@ class AdminDashboardController extends Controller
             'name' => $request->name,
             'solution' => $request->solution,
             'price' => $request->price,
+            'discount' => $request->discount,
             'image' => $imagePath,
         ]);
 
         return redirect()->back()->with('success', 'treatment sukses ditambahkan');
+    }
+
+    public function editTreatment(Request $request, $id)
+    {
+        // 1. Cari data Treatment berdasarkan ID
+        $treatment = Treatment::findOrFail($id);
+
+        // 2. Validasi (gambar dibuat nullable agar tidak wajib diunggah ulang)
+        $request->validate([
+            'name'     => 'required|string',
+            'solution' => 'required|string',
+            'price'    => 'required|numeric',
+            'discount' => 'required|numeric',
+            'image'    => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        // 3. Menyiapkan data yang akan di-update
+        $dataToUpdate = [
+            'name'     => $request->name,
+            'solution' => $request->solution,
+            'price'    => $request->price,
+            'discount' => $request->discount,
+        ];
+
+        // 4. Cek apakah ada file gambar baru yang diunggah
+        if ($request->hasFile('image')) {
+            // (Opsional) Hapus gambar lama jika ada di storage
+            if ($treatment->image && \Storage::disk('public')->exists($treatment->image)) {
+                \Storage::disk('public')->delete($treatment->image);
+            }
+
+            // Simpan gambar baru
+            $dataToUpdate['image'] = $request->file('image')->store('treatment', 'public');
+        }
+
+        // 5. Update data di database
+        $treatment->update($dataToUpdate);
+
+        return redirect()->back()->with('success', 'Treatment berhasil diperbarui!');
     }
 
     // 4. Menu Manajemen Portofolio (Dengan Upload File & Pagination)
@@ -116,6 +157,8 @@ class AdminDashboardController extends Controller
 
         return redirect()->back()->with('success', 'Portofolio sukses diposting');
     }
+
+    
 
     // 5. Menu Manajemen Top-up Saldo User
     public function topups()

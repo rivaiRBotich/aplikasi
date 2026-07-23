@@ -35,7 +35,7 @@
                     <a href="#solutions" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Produk</a>
                     <a href="#portfolio" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Portofolio & Kegiatan</a>
                     <a href="#dokter" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Tim kami</a>
-                    <a href="#about" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Tentang Kami</a>
+                    <!-- <a href="#about" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Tentang Kami</a> -->
                     <a href="#contact" class="text-stone-600 hover:text-[#A9842E] transition duration-300">Contact</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -137,10 +137,18 @@
                     
                     <div class="mt-6 pt-5 border-t border-stone-100/80 flex flex-col gap-4">
                         <div class="flex justify-between items-baseline">
-                            <span class="text-xs text-stone-400 font-medium tracking-wide">Harga Resmi</span>
-                            <span class="font-black text-[#A9842E] text-lg md:text-xl tracking-tight">
-                                Rp {{ number_format($treatments['price'], 0, ',', '.') }}
-                            </span>
+                            <span class="text-xs text-stone-400 font-medium tracking-wide">Harga</span>
+                            <div class="flex items-center gap-2">
+                                {{-- Harga Normal yang Dicoret --}}
+                                <span class="text-xs md:text-sm text-stone-400 line-through font-medium">
+                                    Rp {{ number_format($treatments['price'], 0, ',', '.') }}
+                                </span>
+
+                                {{-- Harga Setelah Diskon --}}
+                                <span class="font-black text-[#A9842E] text-lg md:text-xl tracking-tight">
+                                    Rp {{ number_format($treatments['price'] - ($treatments['price'] * ($treatments['discount'] / 100)), 0, ',', '.') }}
+                                </span>
+                            </div>
                         </div>
                         
                         <a href="https://wa.me/{{$bank?->phone}}?text={{ urlencode('Halo Admin MBC Clinic, Saya ingin bertanya tentang treatment ' . $treatments['name'] . '. Boleh minta info detailnya?') }}"
@@ -328,7 +336,45 @@
             </div>
         </div>
     </section>
+    
+    {{--Tentang Kami --}}
+    {{-- 
+    <section id="about" class="py-24 bg-[#F7F1E6]/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center md:text-left max-w-3xl mb-16">
+                <span class="text-[#A9842E] text-xs font-bold uppercase tracking-widest bg-white px-3 py-1.5 rounded-md border border-[#E0D2AE]/40">Our Doctor</span>
+                <h2 class="text-3xl font-extrabold text-[#3D2E1F] mt-4 tracking-tight">Tentang Kami</h2>
+                <p class="text-stone-500 text-sm md:text-base mt-2">Tim profesional MBC Clinic yang siap memberikan perawatan terbaik untuk Anda.</p>
+            </div>
 
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach($portfolios as $portfolio)
+                <!-- Card Utama Putih -->
+                <article class="bg-white rounded-3xl p-5 border border-[#E0D2AE]/30 shadow-xs hover:shadow-md transition duration-300 flex flex-col justify-between group cursor-pointer">
+                    <div>
+                        <!-- Container Gambar Terbingkai -->
+                        <div class="w-full h-52 rounded-2xl overflow-hidden bg-stone-50">
+                            <img src="{{ asset('storage/' . $portfolio['image']) }}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+                        </div>
+                        
+                        <!-- Konten Artikel -->
+                        <div class="mt-5">
+                            <div class="flex items-center space-x-2 text-[11px] text-stone-400 mb-2">
+                                <span class="font-bold text-[#A9842E] uppercase tracking-wider">{{ $portfolio['category'] }}</span>
+                                <span>•</span>
+                                <span>{{ $portfolio['date'] }}</span>
+                            </div>
+                            <h3 class="font-bold text-base md:text-lg text-[#3D2E1F] group-hover:text-[#A9842E] transition duration-300 leading-snug">{{ $portfolio['title'] }}</h3>
+                            <p class="text-stone-500 text-xs md:text-sm mt-2 line-clamp-2 leading-relaxed">{{ $portfolio['excerpt'] }}</p>
+                        </div>
+                    </div>
+                </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    --}}
+    
     {{-- Contact Section --}}
     <section id="contact" class="py-24 bg-[#F7F1E6]/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

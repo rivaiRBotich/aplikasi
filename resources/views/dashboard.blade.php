@@ -261,15 +261,15 @@
                                         {{ substr($doctor->name, 0, 1) }}
                                     </div>
                                     <span id="status-dot-{{ $doctor->id }}"
-                                          class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-white
-                                                 {{ $doctor->is_online ? 'bg-green-500 animate-pulse' : 'bg-slate-300' }}">
+                                        class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-white
+                                                {{ $doctor->is_online ? 'bg-green-500 animate-pulse' : 'bg-slate-300' }}">
                                     </span>
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="font-bold text-xs text-slate-800 truncate leading-tight">{{ $doctor->name }}</p>
                                     <p class="text-[10px] font-medium capitalize text-slate-400 mt-0.5">Klinik {{ $doctor->clinic_category }}</p>
                                     <p id="status-text-{{ $doctor->id }}"
-                                       class="text-[10px] font-bold mt-0.5 {{ $doctor->is_online ? 'text-green-500' : 'text-slate-400' }}">
+                                    class="text-[10px] font-bold mt-0.5 {{ $doctor->is_online ? 'text-green-500' : 'text-slate-400' }}">
                                         {{ $doctor->is_online ? '● Online' : '○ Offline' }}
                                     </p>
                                 </div>

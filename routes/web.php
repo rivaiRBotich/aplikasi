@@ -56,6 +56,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/doctors/activities', [AdminDashboardController::class, 'doctorActivities'])->name('admin.doctors.activities');
     Route::post('/admin/commission/pay/{id}', [AdminDashboardController::class, 'payCommission'])->name('admin.commission.pay');
     Route::post('/admin/doctors/activities/generate', [AdminDashboardController::class, 'generateCommissions'])->name('admin.commission.generate');
+    Route::put('/admin/treatment/update/{id}', [AdminDashboardController::class, 'editTreatment'])->name('admin.treatment.update');
 });
 // ==========================================
 // 3. ROUTE UNTUK DOKTER
