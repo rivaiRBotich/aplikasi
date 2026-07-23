@@ -7,8 +7,8 @@
             @csrf
             <input type="text" name="name" placeholder="Nama Treatment" class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5" required>
             <input type="text" name="solution" placeholder="Solusi Masalah Kulit/Medis" class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5" required>
-            <input type="number" name="price" placeholder="Harga Jual (Rp)" class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5" required>
-            <input type="number" name="discount" placeholder="Masukan discount" class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5" required>
+            <input type="number" name="price" placeholder="Harga Jual (Rp)" class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5" onkeydown="return event.key !== '.' && event.key !== ','" required>
+            <input type="number" name="discount" placeholder="Masukan discount" class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm p-2.5" onkeydown="return event.key !== '.' && event.key !== ','" required>
             <div>
                 <label class="block text-xs text-slate-400 mb-1 font-semibold">File Gambar Treatment (Max 2MB)</label>
                 <input type="file" name="image" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" required>

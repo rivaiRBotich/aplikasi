@@ -71,8 +71,16 @@ class AdminDashboardController extends Controller
         $request->validate([
             'name' => 'required|string',
             'solution' => 'required|string',
-            'price' => 'required|numeric',
-            'discount' => 'required|numeric',
+            'price'    => [
+                'required',
+                'numeric',
+                'regex:/^[0-9]+$/' // Hanya menerima digit 0-9 tanpa titik atau koma
+            ],
+            'discount' => [
+                'required',
+                'numeric',
+                'regex:/^[0-9]+$/'
+            ],
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
